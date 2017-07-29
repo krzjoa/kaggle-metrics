@@ -1,11 +1,14 @@
 # Kaggle metrcis
 # Krzysztof Joachimiak 2017
 
-import numpy as np
+import theano
+import theano.tensor as T
 import warnings
 
 
-# ============= REGRESSION METRICS ============= #
+# REGRESSION METRICS
+
+# TODO: check input shapes
 
 def mae(y_true, y_pred):
 
@@ -31,7 +34,7 @@ def mae(y_true, y_pred):
 
     '''
 
-    return np.abs(y_true - y_pred).mean()
+    return T.abs_(y_true - y_pred).mean()
 
 
 def wmae(y_true, y_pred, weights):
@@ -58,7 +61,7 @@ def wmae(y_true, y_pred, weights):
 
     '''
 
-    return (weights * np.abs(y_true - y_pred)).mean()
+    return (weights * T.abs_(y_true - y_pred)).mean()
 
 
 def rmse(y_true, y_pred):
@@ -85,7 +88,7 @@ def rmse(y_true, y_pred):
     '''
 
 
-    return np.sqrt(((y_true - y_pred)**2).mean())
+    return T.sqrt(((y_true - y_pred)**2).mean())
 
 
 def rmsle(y_true, y_pred):
@@ -108,62 +111,9 @@ def rmsle(y_true, y_pred):
     References
     ----------
     .. [1] https://www.kaggle.com/wiki/RootMeanSquaredLogarithmicError
+    .. [2] https://www.slideshare.net/KhorSoonHin/rmsle-cost-function
 
     '''
 
-    _check_postive(y_pred)
 
-    return np.sqrt((np.log(y_pred + 1) - np.log(y_true + 1)**2).mean())
-
-
-
-# =============== CLASSIFICATION METRICS ================ #
-
-# TODO: Classification metrics
-
-def log_loss(y_true, y_pred):
-    '''
-
-    Parameters
-    ----------
-    y_true
-    y_pred
-
-    Returns
-    -------
-
-    References
-    ----------
-    .. [1] https://www.kaggle.com/wiki/LogarithmicLoss
-
-    '''
-    pass
-
-def mce(y_true, y_pred):
-    '''
-
-
-    Parameters
-    ----------
-    y_true
-    y_pred
-
-    Returns
-    -------
-
-    References
-    ----------
-    .. [1] https://www.kaggle.com/wiki/MeanConsequentialError
-
-    '''
-    pass
-
-
-# class LogZeroException(Exception):
-#     pass
-
-
-
-def _check_postive(array):
-    if (array < 0).sum():
-        warnings.warn("Passed array contains at least one negative value. It may produce NaNs")
+    return T.sqrt(((T.log(y_pred + 1) - T.log(y_true + 1))**2).mean())
