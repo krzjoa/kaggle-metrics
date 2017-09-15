@@ -3,12 +3,10 @@
 
 import numpy as np
 import warnings
-from utils import check_shapes
+from utils import check_shapes, align_shape
 
 
 # REGRESSION METRICS
-
-# TODO: check input shapes
 
 def mae(y_true, y_pred):
 
@@ -35,6 +33,7 @@ def mae(y_true, y_pred):
     '''
 
     # Check shapes
+    y_true, y_pred = align_shape(y_true, y_pred)
     check_shapes(y_true, y_pred)
 
     return np.abs(y_true - y_pred).mean()
@@ -65,6 +64,7 @@ def wmae(y_true, y_pred, weights):
     '''
 
     # Check shapes
+    y_true, y_pred = align_shape(y_true, y_pred)
     check_shapes(y_true, y_pred)
 
     return (weights * np.abs(y_true - y_pred)).mean()
@@ -94,6 +94,7 @@ def rmse(y_true, y_pred):
     '''
 
     # Check shapes
+    y_true, y_pred = align_shape(y_true, y_pred)
     check_shapes(y_true, y_pred)
 
     return np.sqrt(((y_true - y_pred)**2).mean())
@@ -124,6 +125,7 @@ def rmsle(y_true, y_pred):
     '''
 
     # Check shapes
+    y_true, y_pred = align_shape(y_true, y_pred)
     check_shapes(y_true, y_pred)
 
     return np.sqrt(((np.log(y_pred + 1) - np.log(y_true + 1))**2).mean())

@@ -2,13 +2,9 @@
 # Krzysztof Joachimiak 2017
 
 import numpy as np
-import warnings
-from utils import check_shapes, confusion_binary
+from utils import check_shapes, confusion_binary, align_shape, check_binary
 
-
-# TODO: Classification metrics
-# TODO: Check axes
-# TODO: Check input
+# TODO: order of check_shapes and align_shapes
 
 def log_loss(y_true, y_pred):
     '''
@@ -38,8 +34,14 @@ def log_loss(y_true, y_pred):
 
     # Check shapes
     check_shapes(y_true, y_pred)
+    y_true, y_pred = align_shape(y_true, y_pred)
 
-    return -(y_true - np.log(y_pred)).sum(axis=1).mean()
+    # Checking values
+    if not (y_pred > 0).all():
+        raise ValueError("Prediction array contains zeroes!")
+
+    return -(y_true * np.log(y_pred)).sum(axis=1).mean()
+
 
 def mce(y_true, y_pred):
     '''
@@ -63,16 +65,20 @@ def mce(y_true, y_pred):
     .. [1] https://www.kaggle.com/wiki/MeanConsequentialError
     .. [2] http://www.machinelearning.ru/wiki/images/5/59/PZAD2016_04_errors.pdf (RU)
 
-    '''
+    Notes
+    -----
+    The higher the better.
 
-    # TODO: check, if 0 or 1 values only
-    # TODO: find papers
+    '''
 
     # Check shapes
     check_shapes(y_true, y_pred)
+    y_true, y_pred = align_shape(y_true, y_pred)
 
-    return (y_true.astype(bool) - y_pred.astype(bool)).mean()
+    # Checking binarity
+    check_binary(y_true, y_pred)
 
+    return (y_true.astype(bool) == y_pred.astype(bool)).mean()
 
 
 def hamming_loss(y_true, y_pred):
@@ -97,13 +103,18 @@ def hamming_loss(y_true, y_pred):
     .. [1] https://www.kaggle.com/wiki/HammingLoss
     .. [2] https://en.wikipedia.org/wiki/Multi-label_classification
 
+    Notes
+    -----
+    The smaller the better.
 
     '''
 
-    # TODO: check array shapes etc.
-
     # Check shapes
     check_shapes(y_true, y_pred)
+    y_true, y_pred = align_shape(y_true, y_pred)
+
+    # Logical values only!
+    check_binary(y_true, y_pred)
 
     return np.logical_xor(y_pred, y_true).mean(axis=1).mean()
 
@@ -132,26 +143,24 @@ def mean_utility(y_true, y_pred, weights):
     .. [2] https://en.wikipedia.org/wiki/Multi-label_classification
 
     Notes
-    -----'
+    -----
     The higher the better.
 
     '''
 
     # Check shapes
     check_shapes(y_true, y_pred)
+    y_true, y_pred = align_shape(y_true, y_pred)
 
     # Weights assignment
     w_tp, w_tn, w_fp, w_fn = weights
 
-    # TODO: count these values
     tp, tn, fp, fn = confusion_binary(y_true, y_pred)
 
     return w_tp * tp + w_tn * tn + w_fp * fp + w_fn * fn
 
 
 def mcc(y_true, y_pred):
-
-
     '''
 
     Matthews Correlation Coefficient
@@ -173,10 +182,66 @@ def mcc(y_true, y_pred):
     .. [1] https://lettier.github.io/posts/2016-08-05-matthews-correlation-coefficient.html
     .. [2] https://en.wikipedia.org/wiki/Matthews_correlation_coefficient
 
+    '''
 
+    # Check shapes
+    check_shapes(y_true, y_pred)
+    y_true, y_pred = align_shape(y_true, y_pred)
+
+    # Confusion matrix values
+    tp, tn, fp, fn = confusion_binary(y_true, y_pred)
+
+    numerator = tp * tn - fp * fn
+    denominator = np.sqrt((tp + fp) * (fn + tn) * (fp + tn) * (tp + fn))
+
+    return numerator / denominator
+
+def mean_average_precision(y_true, y_pred):
+
+    # TODO: definition of query!!!
 
     '''
 
+    Mean average precision
+
+    Parameters
+     ----------
+     y_true: numpy.ndarray
+        Targets
+    y_pred: numpy.ndarray
+        Class predictions (0 or 1 values only)
+
+    Returns
+    ------
+    score: float
+        Mean average precision score
+
+    References
+    ----------
+    .. [1] https://en.wikipedia.org/wiki/Information_retrieval#Mean_average_precision
+
+    '''
+
+    # Check shapes
+    check_shapes(y_true, y_pred)
+    y_true, y_pred = align_shape(y_true, y_pred)
 
 
+if __name__ == '__main__':
+    y_pred = np.array([1, 0.1, 0.2, 0.4, 0.23, 1, 0.34, 1, 1])
+    y_true = np.array([1, 0, 0, 0, 1, 1, 0, 0, 1])
 
+    print log_loss(y_true, y_pred)
+
+    # MCE loss
+    y_pred = np.array([1, 0, 0, 0, 1, 1, 0, 1, 1])
+    y_true = np.array([1, 1, 0, 0, 1, 1, 0, 1, 1])
+
+    print mce(y_true, y_pred)
+
+
+    # Hamming loss
+    y_pred = np.array([1, 1, 0, 0, 1, 1, 0, 1, 1])
+    y_true = np.array([1, 1, 0, 0, 1, 1, 0, 1, 1])
+
+    print hamming_loss(y_true, y_pred)

@@ -19,6 +19,8 @@ List: https://www.kaggle.com/wiki/Metrics/history/50647
 * Logarithmic loss
 * Mean consequential error
 * Hamming loss
+* Mean utility
+* Matthews Correlation Coefficient
 
 ### Order metrics
 TODO
@@ -31,7 +33,7 @@ TODO
 
 ## Installation
 ```bash
-pip install 
+sudo pip install git+https://github.com/krzjoa/kaggle-metrics.git
 ```
 ## Usage
 ```python
