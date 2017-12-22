@@ -7,8 +7,7 @@
 
 Metrics for Kaggle competitions.
 
-List: https://www.kaggle.com/wiki/Metrics/history/50647 <br/>
-See wiki: [Implemented metrics](https://github.com/krzjoa/kaggle-metrics/wiki/Implemented-metrics)
+**See wiki**: [Implemented metrics](https://github.com/krzjoa/kaggle-metrics/wiki/Implemented-metrics)
 
 ## Installation
 ```bash
