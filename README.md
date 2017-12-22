@@ -1,4 +1,6 @@
-# kaggle-metrics
+[km]: https://raw.githubusercontent.com/krzjoa/kaggle-metrics/master/kmlogo.png "kaggle-metrics logo" 
+
+# ![alt text][km]  kaggle-metrics
 
 
 Metrics for Kaggle competitions.
