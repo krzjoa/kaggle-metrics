@@ -1,4 +1,4 @@
-[km]: https://raw.githubusercontent.com/krzjoa/kaggle-metrics/master/km50p.png "kaggle-metrics logo" 
+[km]: https://raw.githubusercontent.com/krzjoa/kaggle-metrics/master/img/km50p.png "kaggle-metrics logo" 
 
 ![alt text][km]  
 

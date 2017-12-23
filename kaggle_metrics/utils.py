@@ -100,3 +100,4 @@ def confusion_binary(y_true, y_pred):
     false_positive = confmat[0, 1]
 
     return true_positive, true_negative, false_positive, false_negative
+

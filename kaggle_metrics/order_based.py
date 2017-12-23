@@ -7,10 +7,15 @@
 # Mean Average Precision (row-wise)
 # [AveragePrecision@K] (row-wise)
 
+import numpy as np
+from sklearn.preprocessing import  binarize
+from utils import confusion_binary
+
+
 def auc(y_true, y_pred):
     '''
 
-    Average Among Top P
+    Area Under Curve (AUC)
 
     Parameters
     ----------
@@ -21,8 +26,24 @@ def auc(y_true, y_pred):
 
     Returns
     -------
+    auc_score: float
+        AUC score
 
+    References
+    ----------
+    .. [1] The Meaning and Use of the Area
+            under a Receiver Operating
+            Characteristic (ROC) Curve
+
+            http://pubs.rsna.org/doi/pdf/10.1148/radiology.143.1.7063747
     '''
+
+    for thr in np.arange(0.01, 1.01, 0.01):
+        y_pred_bin = binarize(y_pred, thr)
+        tp, tn, fp, fn = confusion_binary(y_true, y_pred)
+
+
+
 
 
 def aatp(y_true, y_pred):
