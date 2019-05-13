@@ -1,6 +1,6 @@
 [km]: https://raw.githubusercontent.com/krzjoa/kaggle-metrics/master/km50p.png "kaggle-metrics logo" 
 
-# ![alt text][km] kaggle-metrics
+# kaggle-metrics ![alt text][km]
 
 
 Metrics for Kaggle competitions.
