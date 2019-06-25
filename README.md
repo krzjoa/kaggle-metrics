@@ -1,5 +1,6 @@
-
-# kaggle-metrics <img src="img/km50p.png" align="right" width = "120px"/>
+[km]: https://raw.githubusercontent.com/krzjoa/kaggle-metrics/master/km50p.png "kaggle-metrics logo" 
+![alt text][km]
+# kaggle-metrics <img src="https://raw.githubusercontent.com/krzjoa/kaggle-metrics/master/img/kmlogo.png" align="right" width = "120px"/>
 
 Metrics for Kaggle competitions.
 
