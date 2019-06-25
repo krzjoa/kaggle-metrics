@@ -1,4 +1,4 @@
-# kaggle-metrics <img src="https://raw.githubusercontent.com/krzjoa/kaggle-metrics/master/img/kmlogo.png" align="right" width = "120px"/>
+# kaggle-metrics <img src="https://raw.githubusercontent.com/krzjoa/kaggle-metrics/master/img/kmlogo.png" align="left" width = "120px"/>
 
 Metrics for Kaggle competitions.
 
