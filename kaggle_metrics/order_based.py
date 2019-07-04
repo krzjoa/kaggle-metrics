@@ -9,7 +9,7 @@
 
 import numpy as np
 from sklearn.preprocessing import  binarize
-from utils import confusion_binary
+from kaggle_metrics.utils import confusion_binary
 
 
 def auc(y_true, y_pred):

@@ -1,4 +1,7 @@
 # kaggle-metrics <img src="https://raw.githubusercontent.com/krzjoa/kaggle-metrics/master/img/kmlogo.png" align="right" width = "120px"/>
+![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg) 
+[![PyPI version](https://badge.fury.io/py/kaggle-metrics.svg)](https://badge.fury.io/py/kaggle-metrics ) 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
 Metrics for Kaggle competitions.
 

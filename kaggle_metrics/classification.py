@@ -2,7 +2,7 @@
 # Krzysztof Joachimiak 2017
 
 import numpy as np
-from utils import check_shapes, confusion_binary, align_shape, check_binary
+from kaggle_metrics.utils import check_shapes, confusion_binary, align_shape, check_binary
 
 # TODO: order of check_shapes and align_shapes
 
@@ -227,21 +227,26 @@ def mean_average_precision(y_true, y_pred):
     y_true, y_pred = align_shape(y_true, y_pred)
 
 
+# Aliases
+mean_consequential_error = mce
+matthews_correlation_coefficient = mcc
+
+
 if __name__ == '__main__':
     y_pred = np.array([1, 0.1, 0.2, 0.4, 0.23, 1, 0.34, 1, 1])
     y_true = np.array([1, 0, 0, 0, 1, 1, 0, 0, 1])
 
-    print log_loss(y_true, y_pred)
+    print(log_loss(y_true, y_pred))
 
     # MCE loss
     y_pred = np.array([1, 0, 0, 0, 1, 1, 0, 1, 1])
     y_true = np.array([1, 1, 0, 0, 1, 1, 0, 1, 1])
 
-    print mce(y_true, y_pred)
+    print(mce(y_true, y_pred))
 
 
     # Hamming loss
     y_pred = np.array([1, 1, 0, 0, 1, 1, 0, 1, 1])
     y_true = np.array([1, 1, 0, 0, 1, 1, 0, 1, 1])
 
-    print hamming_loss(y_true, y_pred)
+    print(hamming_loss(y_true, y_pred))

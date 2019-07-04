@@ -1,2 +1,2 @@
-from classification import *
-from regression import *
+from kaggle_metrics.classification import *
+from kaggle_metrics.regression import *

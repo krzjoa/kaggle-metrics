@@ -2,8 +2,7 @@
 # Krzysztof Joachimiak 2017
 
 import numpy as np
-import warnings
-from utils import check_shapes, align_shape
+from kaggle_metrics.utils import check_shapes, align_shape
 
 
 # REGRESSION METRICS
@@ -132,3 +131,10 @@ def rmsle(y_true, y_pred):
 
 def ae():
     pass
+
+# aliases
+mean_absolute_error = mae
+weighted_mean_absolute_error = wmae
+root_mean_squared_error = rmse
+root_mean_squared_logarithmic_error = rmsle
+
