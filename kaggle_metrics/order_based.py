@@ -1,3 +1,6 @@
+import numpy as np
+from sklearn.preprocessing import  binarize
+from kaggle_metrics.utils import confusion_binary
 
 # TODO:
 # Area Under Curve (AUC)
@@ -7,12 +10,7 @@
 # Mean Average Precision (row-wise)
 # [AveragePrecision@K] (row-wise)
 
-import numpy as np
-from sklearn.preprocessing import  binarize
-from kaggle_metrics.utils import confusion_binary
-
-
-def auc(y_true, y_pred):
+def area_uder_curve(y_true, y_pred):
     '''
 
     Area Under Curve (AUC)
@@ -42,11 +40,7 @@ def auc(y_true, y_pred):
         y_pred_bin = binarize(y_pred, thr)
         tp, tn, fp, fn = confusion_binary(y_true, y_pred)
 
-
-
-
-
-def aatp(y_true, y_pred):
+def average_among_top_p(y_true, y_pred):
     '''
 
     Average Among Top P
@@ -60,13 +54,15 @@ def aatp(y_true, y_pred):
 
     Returns
     -------
+    aatp_score: float
+        Average Among Top P score
 
     '''
 
 def gini(y_tru, y_pred):
     '''
 
-    Average Among Top P
+    Gini
 
     Parameters
     ----------
@@ -77,7 +73,12 @@ def gini(y_tru, y_pred):
 
     Returns
     -------
+    gini_score: float
+        Gini score
 
     '''
     pass
 
+# Aliases
+auc = area_uder_curve
+aatp = average_among_top_p
