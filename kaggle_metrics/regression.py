@@ -7,7 +7,7 @@ from kaggle_metrics.utils import check_shapes, align_shape
 
 # REGRESSION METRICS
 
-def mae(y_true, y_pred):
+def mean_absolute_error(y_true, y_pred):
 
     '''
 
@@ -38,7 +38,7 @@ def mae(y_true, y_pred):
     return np.abs(y_true - y_pred).mean()
 
 
-def wmae(y_true, y_pred, weights):
+def weighted_mean_absolute_error(y_true, y_pred, weights):
 
     '''
 
@@ -69,7 +69,7 @@ def wmae(y_true, y_pred, weights):
     return (weights * np.abs(y_true - y_pred)).mean()
 
 
-def rmse(y_true, y_pred):
+def root_mean_squared_error(y_true, y_pred):
     '''
 
     Root mean squared error.
@@ -99,7 +99,7 @@ def rmse(y_true, y_pred):
     return np.sqrt(((y_true - y_pred)**2).mean())
 
 
-def rmsle(y_true, y_pred):
+def root_mean_squared_logarithmic_error(y_true, y_pred):
     '''
 
     Root mean squared logarithmic error.
@@ -129,12 +129,10 @@ def rmsle(y_true, y_pred):
 
     return np.sqrt(((np.log(y_pred + 1) - np.log(y_true + 1))**2).mean())
 
-def ae():
-    pass
 
 # aliases
-mean_absolute_error = mae
-weighted_mean_absolute_error = wmae
-root_mean_squared_error = rmse
-root_mean_squared_logarithmic_error = rmsle
+mae = mean_absolute_error
+wmae = weighted_mean_absolute_error
+rmse = root_mean_squared_error
+rmsle = root_mean_squared_logarithmic_error
 

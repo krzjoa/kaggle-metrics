@@ -2,9 +2,11 @@
 # Krzysztof Joachimiak 2017
 
 import numpy as np
-from kaggle_metrics.utils import check_shapes, confusion_binary, align_shape, check_binary
+from kaggle_metrics.utils import check_shapes, \
+    confusion_binary, align_shape, check_binary
 
 # TODO: order of check_shapes and align_shapes
+
 
 def log_loss(y_true, y_pred):
     '''
@@ -43,7 +45,7 @@ def log_loss(y_true, y_pred):
     return -(y_true * np.log(y_pred)).sum(axis=1).mean()
 
 
-def mce(y_true, y_pred):
+def mean_consequential_error(y_true, y_pred):
     '''
 
     Mean consequential error
@@ -160,7 +162,7 @@ def mean_utility(y_true, y_pred, weights):
     return w_tp * tp + w_tn * tn + w_fp * fp + w_fn * fn
 
 
-def mcc(y_true, y_pred):
+def matthews_correlation_coefficient(y_true, y_pred):
     '''
 
     Matthews Correlation Coefficient
@@ -196,40 +198,13 @@ def mcc(y_true, y_pred):
 
     return numerator / denominator
 
-def mean_average_precision(y_true, y_pred):
 
-    # TODO: definition of query!!!
 
-    '''
-
-    Mean average precision
-
-    Parameters
-     ----------
-     y_true: numpy.ndarray
-        Targets
-    y_pred: numpy.ndarray
-        Class predictions (0 or 1 values only)
-
-    Returns
-    ------
-    score: float
-        Mean average precision score
-
-    References
-    ----------
-    .. [1] https://en.wikipedia.org/wiki/Information_retrieval#Mean_average_precision
-
-    '''
-
-    # Check shapes
-    check_shapes(y_true, y_pred)
-    y_true, y_pred = align_shape(y_true, y_pred)
 
 
 # Aliases
-mean_consequential_error = mce
-matthews_correlation_coefficient = mcc
+mce = mean_consequential_error
+mcc = matthews_correlation_coefficient
 
 
 if __name__ == '__main__':
@@ -250,3 +225,6 @@ if __name__ == '__main__':
     y_true = np.array([1, 1, 0, 0, 1, 1, 0, 1, 1])
 
     print(hamming_loss(y_true, y_pred))
+
+
+    # Average precision

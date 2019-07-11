@@ -8,9 +8,65 @@
 # [AveragePrecision@K] (row-wise)
 
 import numpy as np
-from sklearn.preprocessing import  binarize
-from kaggle_metrics.utils import confusion_binary
+from sklearn.preprocessing import binarize
+from kaggle_metrics.utils import check_shapes, \
+    confusion_binary, align_shape, check_binary
 
+
+
+def average_precision(y_true, y_pred):
+    '''
+
+    Average precision
+
+    Parameters
+    ----------
+    y_true: numpy.ndarray
+        Targets
+    y_pred: numpy.ndarray
+        Class predictions (0 or 1 values only)
+
+    Returns
+    ------
+    score: float
+        Mean average precision score
+
+    References
+    ----------
+    .. [1] https://towardsdatascience.com/breaking-down-mean-average-precision-map-ae462f623a52
+    .. [2] https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173
+
+    '''
+
+
+def mean_average_precision(y_true, y_pred):
+    '''
+
+    Mean average precision
+
+    Parameters
+     ----------
+     y_true: numpy.ndarray
+        Targets
+    y_pred: numpy.ndarray
+        Class predictions (0 or 1 values only)
+
+    Returns
+    ------
+    score: float
+        Mean average precision score
+
+    References
+    ----------
+    .. [1] https://towardsdatascience.com/breaking-down-mean-average-precision-map-ae462f623a52
+    .. [2] https://en.wikipedia.org/wiki/Information_retrieval#Mean_average_precision
+    .. [3] https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173
+
+    '''
+
+    # Check shapes
+    check_shapes(y_true, y_pred)
+    y_true, y_pred = align_shape(y_true, y_pred)
 
 def auc(y_true, y_pred):
     '''
@@ -81,3 +137,5 @@ def gini(y_tru, y_pred):
     '''
     pass
 
+# Aliases
+map = mean_average_precision
