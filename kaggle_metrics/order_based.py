@@ -1,4 +1,3 @@
-
 # TODO:
 # Area Under Curve (AUC)
 # Gini
@@ -68,7 +67,8 @@ def mean_average_precision(y_true, y_pred):
     check_shapes(y_true, y_pred)
     y_true, y_pred = align_shape(y_true, y_pred)
 
-def auc(y_true, y_pred):
+
+def area_uder_curve(y_true, y_pred):
     '''
 
     Area Under Curve (AUC)
@@ -98,11 +98,7 @@ def auc(y_true, y_pred):
         y_pred_bin = binarize(y_pred, thr)
         tp, tn, fp, fn = confusion_binary(y_true, y_pred)
 
-
-
-
-
-def aatp(y_true, y_pred):
+def average_among_top_p(y_true, y_pred):
     '''
 
     Average Among Top P
@@ -116,13 +112,15 @@ def aatp(y_true, y_pred):
 
     Returns
     -------
+    aatp_score: float
+        Average Among Top P score
 
     '''
 
 def gini(y_tru, y_pred):
     '''
 
-    Average Among Top P
+    Gini
 
     Parameters
     ----------
@@ -133,9 +131,14 @@ def gini(y_tru, y_pred):
 
     Returns
     -------
+    gini_score: float
+        Gini score
 
     '''
     pass
 
 # Aliases
 map = mean_average_precision
+auc = area_uder_curve
+aatp = average_among_top_p
+
