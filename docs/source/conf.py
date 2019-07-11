@@ -22,7 +22,7 @@ import os,sys
 
 
 sys.path.insert(0, os.path.abspath('../..'))
-import bace
+import kaggle_metrics
 
 
 # -- General configuration ------------------------------------------------
@@ -330,8 +330,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'bace', u'bace Documentation',
-     author, 'bace', 'One line description of project.',
+    (master_doc, 'kaggle-metrics', u'kaggle-metrics Documentation',
+     author, 'kaggle-metrics', 'One line description of project.',
      'Miscellaneous'),
 ]
 
