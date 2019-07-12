@@ -1,6 +1,7 @@
 # kaggle-metrics <img src="https://raw.githubusercontent.com/krzjoa/kaggle-metrics/master/img/kmlogo.png" align="right" width = "120px"/>
 ![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg) 
 [![PyPI version](https://badge.fury.io/py/kaggle-metrics.svg)](https://badge.fury.io/py/kaggle-metrics ) 
+[![Documentation Status](https://readthedocs.org/projects/kaggle-metrics/badge/?version=latest)](https://kaggle-metrics.readthedocs.io/en/latest/?badge=latest) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
 Metrics for Kaggle competitions.
