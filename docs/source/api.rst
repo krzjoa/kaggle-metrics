@@ -9,6 +9,9 @@ kaggle-metrics API
 
     log_loss
     hamming_loss
+    mean_utility
+    matthews_correlation_coefficient
+    intersection_over_union
     mean_absolute_error
 
 .. automodule:: kaggle_metrics

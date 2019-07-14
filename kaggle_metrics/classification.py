@@ -49,6 +49,7 @@ def mean_consequential_error(y_true, y_pred):
     '''
 
     Mean consequential error
+    Alias: mce
 
     Parameters
     ----------
@@ -148,6 +149,7 @@ def mean_utility(y_true, y_pred, weights):
     -----
     The higher the better.
 
+
     '''
 
     # Check shapes
@@ -166,6 +168,7 @@ def matthews_correlation_coefficient(y_true, y_pred):
     '''
 
     Matthews Correlation Coefficient
+    Alias: mcc
 
     Parameters
      ----------
@@ -197,9 +200,6 @@ def matthews_correlation_coefficient(y_true, y_pred):
     denominator = np.sqrt((tp + fp) * (fn + tn) * (fp + tn) * (tp + fn))
 
     return numerator / denominator
-
-
-
 
 
 # Aliases

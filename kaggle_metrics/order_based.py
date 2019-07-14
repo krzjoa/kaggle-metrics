@@ -12,8 +12,8 @@ from kaggle_metrics.utils import check_shapes, \
     confusion_binary, align_shape, check_binary
 
 
-
-def average_precision(y_true, y_pred):
+def average_precision_at_k(y_true, y_pred):
+    # TODO: should work form matrix and vector as well
     '''
 
     Average precision
@@ -27,7 +27,7 @@ def average_precision(y_true, y_pred):
 
     Returns
     ------
-    score: float
+    score: numpy.ndarray
         Mean average precision score
 
     References
@@ -36,6 +36,12 @@ def average_precision(y_true, y_pred):
     .. [2] https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173
 
     '''
+    true_positive = y_pred == y_true
+    tp_cumsum = np.cumsum(true_positive)
+    n_positive = y_true.sum()
+    val_counter = np.cumsum(np.ones(len(y_pred)))
+    return (tp_cumsum * true_positive / val_counter).sum() / n_positive
+
 
 
 def mean_average_precision(y_true, y_pred):
@@ -131,6 +137,7 @@ def gini(y_tru, y_pred):
 
     Returns
     -------
+
     gini_score: float
         Gini score
 
@@ -142,3 +149,8 @@ map = mean_average_precision
 auc = area_uder_curve
 aatp = average_among_top_p
 
+if __name__ == "__main__":
+    y_true = np.array([1,0, 1, 1, 1, 1, 1, 1, 0])
+    y_pred = np.array([1,0, 1, 1, 0, 0, 1, 0, 0])
+
+    print(average_precision(y_true, y_pred))
