@@ -1,6 +1,6 @@
 from kaggle_metrics.classification import *
 from kaggle_metrics.regression import *
-from kaggle_metrics.retrieval import *
+from kaggle_metrics.other import *
 
 __all__ =[
 

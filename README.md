@@ -10,8 +10,14 @@ Metrics for Kaggle competitions.
 
 ## Installation
 ```bash
-sudo pip install git+https://github.com/krzjoa/kaggle-metrics.git
+python3.7 -m pip install git+https://github.com/krzjoa/kaggle-metrics.git
 ```
+or:
+
+```bash
+python3.7 -m pip install kaggle_metrics
+```
+
 ## Usage
 ```python
 from xgboost import XGBRegressor

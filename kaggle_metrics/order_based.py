@@ -1,34 +1,23 @@
-# TODO:
-# Area Under Curve (AUC)
-# Gini
-# Average Among Top P
-# Average Precision (column-wise)
-# Mean Average Precision (row-wise)
-# [AveragePrecision@K] (row-wise)
-
 import numpy as np
 from sklearn.preprocessing import binarize
 from kaggle_metrics.utils import check_shapes, \
     confusion_binary, align_shape, check_binary
 
 
-def average_precision_at_k(y_true, y_pred):
-    # TODO: should work form matrix and vector as well
+def average_precision_at_k(true_positive):
+    # TODO: accept several types of input
     '''
-
-    Average precision
+    Average precision at position k
 
     Parameters
     ----------
-    y_true: numpy.ndarray
-        Targets
-    y_pred: numpy.ndarray
-        Class predictions (0 or 1 values only)
+    true_positive: numpy.ndarray
+        True positive for ordered values in query
 
     Returns
     ------
     score: numpy.ndarray
-        Mean average precision score
+        A vector of average precision score for every k-th point
 
     References
     ----------
@@ -36,25 +25,43 @@ def average_precision_at_k(y_true, y_pred):
     .. [2] https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173
 
     '''
-    true_positive = y_pred == y_true
     tp_cumsum = np.cumsum(true_positive)
-    n_positive = y_true.sum()
-    val_counter = np.cumsum(np.ones(len(y_pred)))
-    return (tp_cumsum * true_positive / val_counter).sum() / n_positive
+    val_counter = np.cumsum(np.ones(len(true_positive)))
+    return np.cumsum(tp_cumsum * true_positive / val_counter) / tp_cumsum
 
 
-
-def mean_average_precision(y_true, y_pred):
+def average_precision(true_positive):
+    # TODO: find columnwise version of Average Precision
     '''
+    Average precision
 
+    Parameters
+    ----------
+    true_positive: numpy.ndarray
+        True positive for ordered values in query
+
+    Returns
+    ------
+    score: numpy.ndarray
+        A vector of average precision score
+
+    References
+    ----------
+    .. [1] https://towardsdatascience.com/breaking-down-mean-average-precision-map-ae462f623a52
+    .. [2] https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173
+
+    '''
+    return average_precision_at_k(true_positive)[-1]
+
+
+def mean_average_precision(true_positive):
+    '''
     Mean average precision
 
     Parameters
-     ----------
-     y_true: numpy.ndarray
-        Targets
-    y_pred: numpy.ndarray
-        Class predictions (0 or 1 values only)
+    ----------
+    true_positive: numpy.ndarray
+        True positive values for n queries (n_queries, answers)
 
     Returns
     ------
@@ -68,64 +75,40 @@ def mean_average_precision(y_true, y_pred):
     .. [3] https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173
 
     '''
-
-    # Check shapes
-    check_shapes(y_true, y_pred)
-    y_true, y_pred = align_shape(y_true, y_pred)
+    map_per_query = np.apply_along_axis(average_precision, 1, true_positive)
+    return map_per_query.mean()
 
 
-def area_uder_curve(y_true, y_pred):
+def area_under_curve(y):
+    # TODO: now we suppose that distance between points always equal one
     '''
 
     Area Under Curve (AUC)
 
     Parameters
     ----------
-    y_true: numpy.ndarray
+    y: numpy.ndarray
         Targets
-    y_pred: numpy.ndarray
-        Class probability
 
     Returns
     -------
     auc_score: float
         AUC score
 
-    References
-    ----------
-    .. [1] The Meaning and Use of the Area
-            under a Receiver Operating
-            Characteristic (ROC) Curve
-
-            http://pubs.rsna.org/doi/pdf/10.1148/radiology.143.1.7063747
     '''
 
-    for thr in np.arange(0.01, 1.01, 0.01):
-        y_pred_bin = binarize(y_pred, thr)
-        tp, tn, fp, fn = confusion_binary(y_true, y_pred)
+    # for thr in np.arange(0.01, 1.01, 0.01):
+    #     y_pred_bin = binarize(y_pred, thr)
+    #     tp, tn, fp, fn = confusion_binary(y_true, y_pred)
+    return np.trapz(y)
 
-def average_among_top_p(y_true, y_pred):
-    '''
 
-    Average Among Top P
+def roc_auc(y_true, y_pred):
+    pass
 
-    Parameters
-    ----------
-    y_true: numpy.ndarray
-        Targets
-    y_pred: numpy.ndarray
-        Class probability
-
-    Returns
-    -------
-    aatp_score: float
-        Average Among Top P score
-
-    '''
 
 def gini(y_tru, y_pred):
     '''
-
     Gini
 
     Parameters
@@ -137,20 +120,39 @@ def gini(y_tru, y_pred):
 
     Returns
     -------
-
     gini_score: float
         Gini score
 
+    References
+    ----------
+    .. [1] https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve
+    .. [2] https://aichamp.wordpress.com/2017/10/19/calculating-auc-and-gini-model-metrics-for-logistic-classification/
+
     '''
     pass
+    # return 2 * roc_auc(y_true, y_pred) - 1
 
 # Aliases
+ap_at_k = average_precision_at_k
+ap = average_precision
 map = mean_average_precision
-auc = area_uder_curve
-aatp = average_among_top_p
+auc = area_under_curve
+
+# TODO: ROC-AUC
+# TODO: try to find Average Among Top P (formerly described in one of Kaggle sites)
+# TODO: ROC AUC
+# TODO: Gini
 
 if __name__ == "__main__":
-    y_true = np.array([1,0, 1, 1, 1, 1, 1, 1, 0])
-    y_pred = np.array([1,0, 1, 1, 0, 0, 1, 0, 0])
+    y_true = np.array([1, 0, 1, 1, 1, 0, 1, 1, 0])
+    y_true2 = np.array([1, 1, 1, 0, 0, 0, 0, 0, 0])
+    y_true3 = np.array([[1, 1, 1, 0, 0, 0, 0, 0, 0],
+                        [1, 1, 0, 1, 0, 1, 0, 0, 0],
+                        [1, 1, 0, 0, 1, 1, 1, 0, 0],
+                        [1, 1, 1, 1, 0, 1, 0, 0, 0],
+                        [0, 1, 1, 1, 0, 1, 0, 0, 0]])
+    #y_pred = np.array([1, 0, 1, 1, 0, 0, 1, 0, 0])
 
-    print(average_precision(y_true, y_pred))
+    #print(average_precision_at_k(y_true2))
+    print(mean_average_precision(y_true3))
+

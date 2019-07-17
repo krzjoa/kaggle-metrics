@@ -6,8 +6,7 @@ import numpy as np
 
 def intersection_over_union(y_true, y_pred):
     '''
-
-    Intersecion over union
+    Intersection over union
 
     Parameters
     ----------
