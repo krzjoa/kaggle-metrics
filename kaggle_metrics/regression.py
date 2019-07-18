@@ -130,9 +130,63 @@ def root_mean_squared_logarithmic_error(y_true, y_pred):
     return np.sqrt(((np.log(y_pred + 1) - np.log(y_true + 1))**2).mean())
 
 
+def mean_absolute_percentage_error(y_true, y_pred):
+    '''
+
+    Mean absolute percentage error
+
+    Parameters
+    ----------
+    y_true: ndarray
+    Ground truth
+    y_pred: ndarray
+    Array of predictions
+
+    Returns
+    -------
+    mean_absolute_percentage_error: float
+        Mean absolute percentage error
+
+    References
+    ----------
+    .. [1] https://en.wikipedia.org/wiki/Mean_absolute_percentage_error
+
+    '''
+    return (np.abs(y_true - y_pred) / y_true).mean()
+
+def mean_percentage_error(y_true, y_pred):
+    '''
+
+    Mean percentage error
+
+    Parameters
+    ----------
+    y_true: ndarray
+        Ground truth
+    y_pred: ndarray
+        Array of predictions
+
+    Returns
+    -------
+    mean_percentage_error: float
+        Mean percentage error
+
+    References
+    ----------
+    .. [1] https://en.wikipedia.org/wiki/Mean_percentage_error
+
+    '''
+    return ((y_true - y_pred) / y_true).mean()
+
+
+
 # aliases
 mae = mean_absolute_error
 wmae = weighted_mean_absolute_error
 rmse = root_mean_squared_error
 rmsle = root_mean_squared_logarithmic_error
+mape = mean_absolute_error
+mpe = mean_percentage_error
+mean_absolute_percentage_deviation = mean_absolute_percentage_error
+mapd = mean_absolute_percentage_deviation
 

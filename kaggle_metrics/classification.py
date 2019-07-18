@@ -159,7 +159,7 @@ def mean_utility(y_true, y_pred, weights):
     # Weights assignment
     w_tp, w_tn, w_fp, w_fn = weights
 
-    tp, tn, fp, fn = confusion_binary(y_true, y_pred)
+    tn, fp, fn, tp = confusion_binary(y_true, y_pred)
 
     return w_tp * tp + w_tn * tn + w_fp * fp + w_fn * fn
 
@@ -194,13 +194,71 @@ def matthews_correlation_coefficient(y_true, y_pred):
     y_true, y_pred = align_shape(y_true, y_pred)
 
     # Confusion matrix values
-    tp, tn, fp, fn = confusion_binary(y_true, y_pred)
+    tn, fp, fn, tp = confusion_binary(y_true, y_pred)
 
     numerator = tp * tn - fp * fn
     denominator = np.sqrt((tp + fp) * (fn + tn) * (fp + tn) * (tp + fn))
 
     return numerator / denominator
 
+def roc_auc(y_true, y_pred, jump=0.01):
+    '''
+    Area under ROC (Receiver Operating Characteristics)  curve
+
+    Parameters
+    ----------
+    y_true: numpy.ndarray
+        Targets
+    y_pred: numpy.ndarray
+        Class probability
+
+    References
+    ----------
+    .. [1] https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc
+
+    Returns
+    -------
+    roc_auc_score: float
+        ROC AUC score
+    '''
+    y_true, y_pred = y_true.reshape(-1, 1), y_pred.reshape(-1, 1)
+    x = []
+    y = []
+    for thr in np.arange(0.01, 1 + jump, jump):
+        y_pred_bin = binarize(y_pred, thr)
+        tn, fp, fn, tp = confusion_binary(y_true, y_pred_bin)
+        tpr = tp / (tp + fn)
+        fpr = fp / (tn + fp)
+        y.append(tpr)
+        x.append(fpr)
+    x = np.array(x)
+    y = np.array(y)
+    return np.abs(np.trapz(y, x))
+
+
+def gini(y_true, y_pred):
+    '''
+    Gini
+
+    Parameters
+    ----------
+    y_true: numpy.ndarray
+        Targets
+    y_pred: numpy.ndarray
+        Class probability
+
+    Returns
+    -------
+    gini_score: float
+        Gini score
+
+    References
+    ----------
+    .. [1] https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve
+    .. [2] https://aichamp.wordpress.com/2017/10/19/calculating-auc-and-gini-model-metrics-for-logistic-classification/
+
+    '''
+    return 2 * roc_auc(y_true, y_pred) - 1
 
 # Aliases
 mce = mean_consequential_error

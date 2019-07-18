@@ -87,17 +87,8 @@ def check_binary(y_true, y_pred):
 
 
 def confusion_binary(y_true, y_pred):
-
     confmat = confusion_matrix(y_true, y_pred)
-
     confmat = confmat.astype(float)
-
-    # TODO: check confmat
-    true_negative = confmat[0, 0]
-    false_negative = confmat[1, 0]
-
-    true_positive = confmat[1, 1]
-    false_positive = confmat[0, 1]
-
-    return true_positive, true_negative, false_positive, false_negative
+    tn, fp, fn, tp = confmat.ravel()
+    return tn, fp, fn, tp
 
