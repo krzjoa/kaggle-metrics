@@ -4,6 +4,7 @@
 import numpy as np
 from kaggle_metrics.utils import check_shapes, \
     confusion_binary, align_shape, check_binary
+from sklearn.preprocessing import binarize
 
 # TODO: order of check_shapes and align_shapes
 
@@ -49,7 +50,6 @@ def mean_consequential_error(y_true, y_pred):
     '''
 
     Mean consequential error
-    Alias: mce
 
     Parameters
     ----------
@@ -90,8 +90,8 @@ def hamming_loss(y_true, y_pred):
     Hamming loss
 
     Parameters
-     ----------
-     y_true: numpy.ndarray
+    ----------
+    y_true: numpy.ndarray
         Targets
     y_pred: numpy.ndarray
         Class predictions (0 or 1 values only)
@@ -129,8 +129,8 @@ def mean_utility(y_true, y_pred, weights):
     Mean utility
 
     Parameters
-     ----------
-     y_true: numpy.ndarray
+    ----------
+    y_true: numpy.ndarray
         Targets
     y_pred: numpy.ndarray
         Class predictions (0 or 1 values only)
@@ -168,11 +168,10 @@ def matthews_correlation_coefficient(y_true, y_pred):
     '''
 
     Matthews Correlation Coefficient
-    Alias: mcc
 
     Parameters
-     ----------
-     y_true: numpy.ndarray
+    ----------
+    y_true: numpy.ndarray
         Targets
     y_pred: numpy.ndarray
         Class predictions (0 or 1 values only)
@@ -233,7 +232,7 @@ def roc_auc(y_true, y_pred, jump=0.01):
         x.append(fpr)
     x = np.array(x)
     y = np.array(y)
-    return np.abs(np.trapz(y, x))
+    return np.abs(np.trapz(y, x)) # Why trapz gives negative value?
 
 
 def gini(y_true, y_pred):

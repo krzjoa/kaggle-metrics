@@ -1,7 +1,7 @@
 from setuptools import setup
 
 # python3 setup.py sdist bdist_wheel
-# python3 -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+# python3.7 -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
 
 readme = open('README.md').read()
 doclink = """
@@ -9,7 +9,7 @@ Documentation
 -------------
 The full documentation is at http://kaggle-metrics.rtfd.org."""
 
-VERSION = '0.2.0'
+VERSION = '0.3.0'
 
 setup(
   name = 'kaggle-metrics',
