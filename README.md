@@ -6,8 +6,6 @@
 
 Metrics for Kaggle competitions.
 
-**See wiki**: [Implemented metrics](https://github.com/krzjoa/kaggle-metrics/wiki/Implemented-metrics)
-
 ## Installation
 ```bash
 python3.7 -m pip install git+https://github.com/krzjoa/kaggle-metrics.git
