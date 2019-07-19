@@ -3,6 +3,12 @@ kaggle-metrics
 .. image:: https://img.shields.io/badge/python-3.7-blue.svg
     :target: https://bace.readthedocs.io/en/latest/?badge=latest
     :alt: Python version
+.. image:: https://badge.fury.io/py/kaggle-metrics.svg
+    :target: https://badge.fury.io/py/kaggle-metrics
+    :alt: PyPI version
+.. image:: https://readthedocs.org/projects/kaggle-metrics/badge/?version=latest
+    :target: https://kaggle-metrics.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
     :target: https://opensource.org/licenses/MIT)
     :alt: Licence

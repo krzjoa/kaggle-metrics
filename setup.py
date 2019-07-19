@@ -9,7 +9,7 @@ Documentation
 -------------
 The full documentation is at http://kaggle-metrics.rtfd.org."""
 
-VERSION = '0.3.0'
+VERSION = '0.3.1'
 
 setup(
   name = 'kaggle-metrics',
